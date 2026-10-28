@@ -1,0 +1,42 @@
+# The web UI next to the ai-services.
+#
+#   docker compose up -d --build        # http://localhost:8030
+#
+# The container joins the network of the ai-services compose project (its
+# default name is ai-sound-services) and reaches the services by their names.
+# Set SERVICES_NETWORK in .env if the backend runs under another project name
+# (docker network ls shows it, e.g. avidbackend_default), or point the *_URL
+# variables at a GPU machine on the LAN instead.
+#
+# SESSIONS_DIR is the folder with your Pro Tools sessions (read-only mount).
+
+name: ai-sound-webui
+
+services:
+  webui:
+    build: .
+    image: ai-sound-design/webui:latest
+    restart: unless-stopped
+    ports:
+      - "${WEBUI_PORT:-8030}:8030"
+    environment:
+      SESSIONS_DIRS: /sessions
+      CACHE_DIR: /cache
+      GENERATION_URL: ${GENERATION_URL:-http://generation-gateway:8010}
+      SEARCH_URL: ${SEARCH_URL:-http://sound-search-api:8002}
+      SPOTTING_URL: ${SPOTTING_URL:-http://spotting-api:8003}
+      HYBRID_URL: ${HYBRID_URL:-http://hybrid-api:8004}
+    volumes:
+      - ${SESSIONS_DIR:-./sessions}:/sessions:ro
+      - webui-cache:/cache
+    networks:
+      - default
+      - services
+
+networks:
+  services:
+    external: true
+    name: ${SERVICES_NETWORK:-ai-sound-services_default}
+
+volumes:
+  webui-cache:
