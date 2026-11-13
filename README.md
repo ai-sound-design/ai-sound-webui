@@ -14,7 +14,20 @@ one more container next to the backend:
 
 ## Quick start
 
-Two ways to run it:
+Three ways to run it:
+
+### On a Mac: with the installer app
+
+On an Apple Silicon Mac the ai-services run natively (Docker on macOS cannot reach the GPU), and
+this web UI runs with them: the services' installer fetches this repository, builds the frontend
+and runs the session server as one more background service on port 8030. Download the
+[AI Sound Design Installer](https://github.com/ai-sound-design/installer/releases/latest),
+tick **Web UI** (the backend services come with it) and choose the folder with your Pro Tools
+sessions under *Folders*. Afterwards the app **AI Sound Design** (Applications, Launchpad,
+Spotlight) opens it; the installer, opened again, offers an update when this repository has a
+newer commit. In Terminal the same is `bash install_mac.sh` in the
+[ai-services](https://github.com/ai-sound-design/ai-services). The container below needs the
+ai-services' Docker network and does not apply there.
 
 ### As a container next to the ai-services
 
@@ -39,7 +52,8 @@ npm run server         # http://localhost:8030, the session server
 npm run dev            # http://localhost:5173, the frontend (proxies /api and /svc)
 ```
 
-On macOS/Linux use `server/.venv/bin/python` instead of `.venv/Scripts/python` in the two scripts.
+Both scripts work on Windows, macOS and Linux (`scripts/server.mjs`); `PYTHON` names the Python
+that creates the virtualenv if `python3` (`python` on Windows) is not 3.12.
 The server shows the folders in `SESSIONS_DIRS` (several, separated by `;`), e.g.
 `SESSIONS_DIRS="D:/Projects;E:/Archive" npm run server`.
 
@@ -53,6 +67,8 @@ remembered). Opening a Pro Tools session always needs the session server.
 ```bash
 # in the ai-services repository (needs an NVIDIA GPU)
 docker compose up -d
+# or, on an Apple Silicon Mac, natively (installs this web UI as well)
+bash install_mac.sh
 ```
 
 In the container the service URLs come from `.env`; the dev server forwards the `/svc/…` paths,

@@ -8,8 +8,8 @@
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "typecheck": "tsc -b --noEmit",
-    "server": "cd server && .venv/Scripts/python -m uvicorn app.main:app --host 127.0.0.1 --port 8030 --reload",
-    "server:setup": "cd server && python -m venv .venv && .venv/Scripts/python -m pip install -r requirements.txt"
+    "server": "node scripts/server.mjs",
+    "server:setup": "node scripts/server.mjs setup"
   },
   "dependencies": {
     "@ffmpeg/core": "^0.12.10",
