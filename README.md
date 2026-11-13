@@ -16,18 +16,24 @@ one more container next to the backend:
 
 Three ways to run it:
 
-### On a Mac: with the installer app
+### With the installer app (Mac or Windows)
+
+Download the [AI Sound Design Installer](https://github.com/ai-sound-design/installer/releases/latest),
+tick **Web UI** (the backend services come with it) and choose the folder with your Pro Tools
+sessions under *Folders*. The installer, opened again, offers an update when this repository
+has a newer commit.
 
 On an Apple Silicon Mac the ai-services run natively (Docker on macOS cannot reach the GPU), and
 this web UI runs with them: the services' installer fetches this repository, builds the frontend
-and runs the session server as one more background service on port 8030. Download the
-[AI Sound Design Installer](https://github.com/ai-sound-design/installer/releases/latest),
-tick **Web UI** (the backend services come with it) and choose the folder with your Pro Tools
-sessions under *Folders*. Afterwards the app **AI Sound Design** (Applications, Launchpad,
-Spotlight) opens it; the installer, opened again, offers an update when this repository has a
-newer commit. In Terminal the same is `bash install_mac.sh` in the
-[ai-services](https://github.com/ai-sound-design/ai-services). The container below needs the
-ai-services' Docker network and does not apply there.
+and runs the session server as one more background service on port 8030. Afterwards the app
+**AI Sound Design** (Applications, Launchpad, Spotlight) opens it. In Terminal the same is
+`bash install_mac.sh` in the [ai-services](https://github.com/ai-sound-design/ai-services).
+The container below needs the ai-services' Docker network and does not apply there.
+
+On Windows the installer asks where the web UI runs: as the container below, beside the
+services in Docker Desktop, or on the PC directly, built and served by the services'
+`install_windows.ps1` (also beside a Docker stack: `install_windows.ps1 -Only webui`).
+The Start menu folder **AI Sound Design** then opens it.
 
 ### As a container next to the ai-services
 
